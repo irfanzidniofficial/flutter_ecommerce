@@ -14,6 +14,7 @@ class BannerWidget extends StatelessWidget {
             i,
             fit: BoxFit.cover,
             height: 200,
+            scale: 1,
           ),
         );
       }).toList(),
