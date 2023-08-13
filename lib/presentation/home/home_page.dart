@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
+import 'package:flutter_ecommerce/presentation/cart/cart_page.dart';
 import 'package:flutter_ecommerce/presentation/home/widgets/banner_widget.dart';
 import 'package:flutter_ecommerce/presentation/home/widgets/list_category_widget.dart';
 import 'package:flutter_ecommerce/presentation/home/widgets/list_product_widget.dart';
@@ -205,8 +206,20 @@ class _HomePageState extends State<HomePage> {
                         style: const TextStyle(color: Color(0xffEE4D2D)),
                       ),
                       // badgeColor: Colors.white,
-                      child: const Icon(
-                        Icons.shopping_cart_outlined,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const CartPage();
+                              },
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.shopping_cart_outlined,
+                        ),
                       ),
                     );
                   }

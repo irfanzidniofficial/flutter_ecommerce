@@ -136,11 +136,23 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                                     color: Color(0xffEE4D2D),
                                   ),
                                 ),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
                                     horizontal: 5,
                                   ),
-                                  child: Text('0'),
+                                  child:
+                                      BlocBuilder<CheckoutBloc, CheckoutState>(
+                                    builder: (context, state) {
+                                      if (state is CheckoutSuccess) {
+                                        final countItem = state.items
+                                            .where((element) =>
+                                                element.id == product.id)
+                                            .length;
+                                        return Text('$countItem');
+                                      }
+                                      return const Text('0');
+                                    },
+                                  ),
                                 ),
                                 InkWell(
                                   onTap: () {
