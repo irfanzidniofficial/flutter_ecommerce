@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/bloc/get_products/get_products_bloc.dart';
 import 'package:flutter_ecommerce/data/datasource/product_remote_datasource.dart';
 import 'package:flutter_ecommerce/presentation/home/home_page.dart';
@@ -13,10 +14,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetProductsBloc(
-        ProductRemoteDataSource(),
-      ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => GetProductsBloc(
+            ProductRemoteDataSource(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => CheckoutBloc(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',

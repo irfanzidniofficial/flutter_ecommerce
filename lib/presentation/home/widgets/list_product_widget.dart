@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/bloc/get_products/get_products_bloc.dart';
 
 import '../../../data/models/response/list_product_response_model.dart';
@@ -89,15 +90,15 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                       height: 1,
                       color: Colors.grey[400],
                     ),
-                    const Column(
+                    Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Icon(
                                   Icons.shopping_cart,
@@ -116,26 +117,42 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8,
                             ),
                             Row(
                               children: [
-                                Icon(
-                                  Icons.remove_circle_outline,
-                                  size: 18,
-                                  color: Color(0xffEE4D2D),
+                                InkWell(
+                                  onTap: () {
+                                    context.read<CheckoutBloc>().add(
+                                          RemoveFromCartEvent(
+                                            product: product,
+                                          ),
+                                        );
+                                  },
+                                  child: const Icon(
+                                    Icons.remove_circle_outline,
+                                    size: 18,
+                                    color: Color(0xffEE4D2D),
+                                  ),
                                 ),
-                                Padding(
+                                const Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 5,
                                   ),
                                   child: Text('0'),
                                 ),
-                                Icon(
-                                  Icons.add_circle_outline,
-                                  size: 18,
-                                  color: Color(0xffEE4D2D),
+                                InkWell(
+                                  onTap: () {
+                                    context.read<CheckoutBloc>().add(
+                                          AddtoCartEvent(product: product),
+                                        );
+                                  },
+                                  child: const Icon(
+                                    Icons.add_circle_outline,
+                                    size: 18,
+                                    color: Color(0xffEE4D2D),
+                                  ),
                                 ),
                               ],
                             )

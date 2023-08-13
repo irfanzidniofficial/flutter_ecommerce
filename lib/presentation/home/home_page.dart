@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
+import 'package:flutter_ecommerce/presentation/home/widgets/banner_widget.dart';
 import 'package:flutter_ecommerce/presentation/home/widgets/list_category_widget.dart';
 import 'package:flutter_ecommerce/presentation/home/widgets/list_product_widget.dart';
 import 'package:badges/badges.dart' as badges;
@@ -80,27 +83,27 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: const Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
-          ListCategoryWidget(),
-          SizedBox(
+          const ListCategoryWidget(),
+          const SizedBox(
             height: 10,
           ),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 5),
-          //   child: ClipRRect(
-          //     borderRadius: BorderRadius.circular(8),
-          //     child: const BannerWidget(),
-          //   ),
-          // ),
-          SizedBox(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: const BannerWidget(),
+            ),
+          ),
+          const SizedBox(
             height: 14,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(
               left: 16,
             ),
@@ -112,10 +115,10 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
-          Expanded(
+          const Expanded(
             child: ListProductWidget(),
           ),
         ],
@@ -185,18 +188,30 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              child: const badges.Badge(
-                badgeStyle:
-                    badges.BadgeStyle(elevation: 0, badgeColor: Colors.white),
-                // elevation: 0,
-                badgeContent: Text(
-                  '0',
-                  style: TextStyle(color: Color(0xffEE4D2D)),
-                ),
-                // badgeColor: Colors.white,
-                child: Icon(
-                  Icons.shopping_cart_outlined,
-                ),
+              child: BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  if (state is CheckoutError) {
+                    return const Center(
+                      child: Text("Data Error"),
+                    );
+                  }
+                  if (state is CheckoutSuccess) {
+                    return badges.Badge(
+                      badgeStyle: const badges.BadgeStyle(
+                          elevation: 0, badgeColor: Colors.white),
+                      // elevation: 0,
+                      badgeContent: Text(
+                        '${state.items.length}',
+                        style: const TextStyle(color: Color(0xffEE4D2D)),
+                      ),
+                      // badgeColor: Colors.white,
+                      child: const Icon(
+                        Icons.shopping_cart_outlined,
+                      ),
+                    );
+                  }
+                  return const Text("Loading");
+                },
               ),
             ),
             label: '',
