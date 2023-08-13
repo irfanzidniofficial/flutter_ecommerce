@@ -12,7 +12,7 @@ class ProductRemoteDataSource {
 
     if (response.statusCode == 200) {
       return Right(
-        ListProductResponseModel.fromRawJson(response.body),
+        ListProductResponseModel.fromJson(response.body),
       );
     } else {
       return const Left("Proses Gagal");

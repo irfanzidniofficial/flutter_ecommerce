@@ -27,6 +27,13 @@ class _ListProductWidgetState extends State<ListProductWidget> {
         }
 
         if (state is GetProductsSuccess) {
+          if (state.data.data!.isEmpty) {
+            return const Center(
+              child: Text(
+                "Data Empty",
+              ),
+            );
+          }
           return GridView.builder(
             itemCount: state.data.data!.length,
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -49,11 +56,11 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Hero(
-                      tag: product.attributes!.image!.toString(),
+                      tag: product.attributes!.image!,
                       child: SizedBox(
                         height: 150,
                         child: Image.network(
-                          product.attributes!.image!.toString(),
+                          product.attributes!.image!,
                         ),
                       ),
                     ),
