@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/common/global_variables.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:flutter_ecommerce/data/datasource/auth_local_datasource.dart';
+import 'package:flutter_ecommerce/presentation/auth/auth_page.dart';
+import 'package:flutter_ecommerce/presentation/checkout/checkout_page.dart';
 import 'package:flutter_ecommerce/presentation/home/home_page.dart';
 
 class CartPage extends StatefulWidget {
@@ -131,7 +134,28 @@ class _CartPageState extends State<CartPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              onPressed: () async {},
+              onPressed: () async {
+                final isLogin = await AuthLocalDatasource().isLogin();
+                if (isLogin) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const CheckoutPage();
+                      },
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const AuthPage();
+                      },
+                    ),
+                  );
+                }
+              },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
                 backgroundColor: const Color(0xffEE4D2D),
