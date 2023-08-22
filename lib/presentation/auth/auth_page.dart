@@ -135,6 +135,8 @@ class _AuthPageState extends State<AuthPage> {
                         CustomTextField(
                           controller: _passwordController,
                           hintText: 'Password',
+                          
+                          
                         ),
                         const SizedBox(height: 10),
                         BlocConsumer<LoginBloc, LoginState>(

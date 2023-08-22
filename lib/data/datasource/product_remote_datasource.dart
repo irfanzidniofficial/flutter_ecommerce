@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class ProductRemoteDataSource {
   Future<Either<String, ListProductResponseModel>> getAllProduct() async {
     final response = await http.get(
-      Uri.parse('${GlobalVariables.baseUrl}/api/products'),
+      Uri.parse('$baseUrl/api/products'),
     );
 
     if (response.statusCode == 200) {

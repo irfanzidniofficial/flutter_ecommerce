@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_ecommerce/common/global_variables.dart';
-import 'package:flutter_ecommerce/data/models/request/login_request_model.dart';
 import 'package:flutter_ecommerce/data/models/response/auth_response_model.dart';
 
+import '../../common/global_variables.dart';
+import '../models/request/login_request_model.dart';
 import 'package:http/http.dart' as http;
 
-class AuthRemoteDatasource {
+class OrderRemoteDatasource {
   Future<Either<String, AuthResponseModel>> login(
       LoginRequestModel model) async {
     final response = await http.post(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final baseUrl = dotenv.env['BASE_URL'];
 
 class GlobalVariables {
-  static const baseUrl = 'http://10.0.2.2:1337';
   static const List<Map<String, String>> categoryImages = [
     {
       'title': 'Mobiles',
