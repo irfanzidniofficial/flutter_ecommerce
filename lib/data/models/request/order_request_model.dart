@@ -1,100 +1,103 @@
+// To parse this JSON data, do
+//
+//     final orderRequestModel = orderRequestModelFromJson(jsonString);
+
 import 'dart:convert';
 
 class OrderRequestModel {
-  final String statusCode;
-  final String statusMessage;
-  final String transactionId;
-  final String orderId;
-  final String merchantId;
-  final String grossAmount;
-  final String currency;
-  final String paymentType;
-  final DateTime transactionTime;
-  final String transactionStatus;
-  final String fraudStatus;
-  final List<Action> actions;
-  final DateTime expiryTime;
+  final Data data;
 
   OrderRequestModel({
-    required this.statusCode,
-    required this.statusMessage,
-    required this.transactionId,
-    required this.orderId,
-    required this.merchantId,
-    required this.grossAmount,
-    required this.currency,
-    required this.paymentType,
-    required this.transactionTime,
-    required this.transactionStatus,
-    required this.fraudStatus,
-    required this.actions,
-    required this.expiryTime,
+    required this.data,
   });
 
-  factory OrderRequestModel.fromJson(String str) =>
-      OrderRequestModel.fromMap(json.decode(str));
+  factory OrderRequestModel.fromRawJson(String str) =>
+      OrderRequestModel.fromJson(json.decode(str));
 
-  String toJson() => json.encode(toMap());
+  String toRawJson() => json.encode(toJson());
 
-  factory OrderRequestModel.fromMap(Map<String, dynamic> json) =>
+  factory OrderRequestModel.fromJson(Map<String, dynamic> json) =>
       OrderRequestModel(
-        statusCode: json["status_code"],
-        statusMessage: json["status_message"],
-        transactionId: json["transaction_id"],
-        orderId: json["order_id"],
-        merchantId: json["merchant_id"],
-        grossAmount: json["gross_amount"],
-        currency: json["currency"],
-        paymentType: json["payment_type"],
-        transactionTime: DateTime.parse(json["transaction_time"]),
-        transactionStatus: json["transaction_status"],
-        fraudStatus: json["fraud_status"],
-        actions:
-            List<Action>.from(json["actions"].map((x) => Action.fromMap(x))),
-        expiryTime: DateTime.parse(json["expiry_time"]),
+        data: Data.fromJson(json["data"]),
       );
 
-  Map<String, dynamic> toMap() => {
-        "status_code": statusCode,
-        "status_message": statusMessage,
-        "transaction_id": transactionId,
-        "order_id": orderId,
-        "merchant_id": merchantId,
-        "gross_amount": grossAmount,
-        "currency": currency,
-        "payment_type": paymentType,
-        "transaction_time": transactionTime.toIso8601String(),
-        "transaction_status": transactionStatus,
-        "fraud_status": fraudStatus,
-        "actions": List<dynamic>.from(actions.map((x) => x.toMap())),
-        "expiry_time": expiryTime.toIso8601String(),
+  Map<String, dynamic> toJson() => {
+        "data": data.toJson(),
       };
 }
 
-class Action {
-  final String name;
-  final String method;
-  final String url;
+class Data {
+  final List<Item> items;
+  final int totalPrice;
+  final String deliveryAddress;
+  final String courierName;
+  final int shippingCost;
+  final String statusOrder;
+ 
 
-  Action({
-    required this.name,
-    required this.method,
-    required this.url,
+  Data({
+    required this.items,
+    required this.totalPrice,
+    required this.deliveryAddress,
+    required this.courierName,
+    required this.shippingCost,
+    required this.statusOrder,
+    
   });
 
-  factory Action.fromJson(String str) => Action.fromMap(json.decode(str));
+  factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
 
-  String toJson() => json.encode(toMap());
+  String toRawJson() => json.encode(toJson());
 
-  factory Action.fromMap(Map<String, dynamic> json) => Action(
-        name: json["name"],
-        method: json["method"],
-        url: json["url"],
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        items: List<Item>.from(json["items"].map((x) => Item.fromJson(x))),
+        totalPrice: json["totalPrice"],
+        deliveryAddress: json["deliveryAddress"],
+        courierName: json["courierName"],
+        shippingCost: json["shippingCost"],
+        statusOrder: json["statusOrder"],
+       
       );
 
-  Map<String, dynamic> toMap() => {
-        "name": name,
-        "method": method,
-        "url": url,
+  Map<String, dynamic> toJson() => {
+        "items": List<dynamic>.from(items.map((x) => x.toJson())),
+        "totalPrice": totalPrice,
+        "deliveryAddress": deliveryAddress,
+        "courierName": courierName,
+        "shippingCost": shippingCost,
+        "statusOrder": statusOrder,
+        
+      };
+}
+
+class Item {
+  final int id;
+  final String productName;
+  final int price;
+  final int qty;
+
+  Item({
+    required this.id,
+    required this.productName,
+    required this.price,
+    required this.qty,
+  });
+
+  factory Item.fromRawJson(String str) => Item.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Item.fromJson(Map<String, dynamic> json) => Item(
+        id: json["id"],
+        productName: json["productName"],
+        price: json["price"],
+        qty: json["qty"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "productName": productName,
+        "price": price,
+        "qty": qty,
       };
 }
