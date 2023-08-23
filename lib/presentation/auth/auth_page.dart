@@ -135,8 +135,6 @@ class _AuthPageState extends State<AuthPage> {
                         CustomTextField(
                           controller: _passwordController,
                           hintText: 'Password',
-                          
-                          
                         ),
                         const SizedBox(height: 10),
                         BlocConsumer<LoginBloc, LoginState>(
@@ -193,28 +191,28 @@ class _AuthPageState extends State<AuthPage> {
               const SizedBox(
                 height: 16,
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(16),
-              //   child: SizedBox(
-              //     width: double.infinity,
-              //     child: ElevatedButton(
-              //       style: ElevatedButton.styleFrom(
-              //           backgroundColor: const Color(0xffEE4D2D)),
-              //       onPressed: () {
-              //         Navigator.push(context,
-              //             MaterialPageRoute(builder: (context) {
-              //           return const HomePage();
-              //         }));
-              //       },
-              //       child: const Text(
-              //         'Continue as a Guest',
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xffEE4D2D)),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const HomePage();
+                      }));
+                    },
+                    child: const Text(
+                      'Continue as a Guest',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
