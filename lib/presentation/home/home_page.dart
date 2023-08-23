@@ -85,27 +85,27 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Column(
+      body: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
+          SizedBox(
             height: 16,
           ),
-          const ListCategoryWidget(),
-          const SizedBox(
+          ListCategoryWidget(),
+          SizedBox(
             height: 10,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: const BannerWidget(),
-            ),
-          ),
-          const SizedBox(
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 5),
+          //   child: ClipRRect(
+          //     borderRadius: BorderRadius.circular(8),
+          //     child: const BannerWidget(),
+          //   ),
+          // ),
+          SizedBox(
             height: 14,
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(
               left: 16,
             ),
@@ -117,10 +117,10 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: 8,
           ),
-          const Expanded(
+          Expanded(
             child: ListProductWidget(),
           ),
         ],

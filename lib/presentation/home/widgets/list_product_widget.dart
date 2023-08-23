@@ -61,8 +61,8 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                       child: SizedBox(
                         height: 150,
                         child: Image.network(
-                          product.attributes!.image!,
-                        ),
+                            product.attributes!.image!,
+                         ),
                       ),
                     ),
                     const SizedBox(

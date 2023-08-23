@@ -5,6 +5,7 @@ import 'package:flutter_ecommerce/bloc/order/order_bloc.dart';
 import 'package:flutter_ecommerce/common/global_variables.dart';
 import 'package:flutter_ecommerce/common/snap_widget.dart';
 import 'package:flutter_ecommerce/data/models/request/order_request_model.dart';
+import 'package:logger/logger.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -95,6 +96,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 16,
+          vertical: 10,
         ),
         child: BlocListener<OrderBloc, OrderState>(
           listener: (context, state) {
@@ -112,6 +114,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
           child: BlocBuilder<CheckoutBloc, CheckoutState>(
             builder: (context, state) {
               if (state is CheckoutSuccess) {
+                var logger = Logger();
+
                 return ElevatedButton(
                   onPressed: () {
                     final total = state.items.fold(
@@ -121,10 +125,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     final data = Data(
                       items: state.items
                           .map((e) => Item(
-                              id: e.id!,
-                              productName: e.attributes!.name!,
-                              price: e.attributes!.price!,
-                              qty: e.attributes!.price!))
+                                id: e.id!,
+                                productName: e.attributes!.name!,
+                                price: e.attributes!.price!,
+                                qty: e.attributes!.price!,
+                              ))
                           .toList(),
                       courierName: 'JNE',
                       deliveryAddress: addressController.text,
@@ -137,6 +142,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     context.read<OrderBloc>().add(
                           OrderEvent.doOrder(requestModel),
                         );
+                    logger.i("Info Log");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(

@@ -20,7 +20,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       emit(const _$_Loading());
       final result = await datasource.order(event.model);
       result.fold(
-        (l) => emit(const _Error()),
+        (l) => emit(_Error()),
         (r) => emit(_Success(r)),
       );
     });

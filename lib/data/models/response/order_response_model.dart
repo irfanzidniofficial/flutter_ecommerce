@@ -18,8 +18,8 @@ class OrderResponseModel {
 
   factory OrderResponseModel.fromMap(Map<String, dynamic> map) {
     return OrderResponseModel(
-      token: map['token'] as String,
-      redirectUrl: map['redirect_url'] as String,
+      token: map['token'] ?? '',
+      redirectUrl: map['redirect_url'] ?? '',
     );
   }
 

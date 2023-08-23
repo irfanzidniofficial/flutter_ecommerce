@@ -33,7 +33,6 @@ class Data {
   final String courierName;
   final int shippingCost;
   final String statusOrder;
- 
 
   Data({
     required this.items,
@@ -42,7 +41,6 @@ class Data {
     required this.courierName,
     required this.shippingCost,
     required this.statusOrder,
-    
   });
 
   factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
@@ -56,7 +54,6 @@ class Data {
         courierName: json["courierName"],
         shippingCost: json["shippingCost"],
         statusOrder: json["statusOrder"],
-       
       );
 
   Map<String, dynamic> toJson() => {
@@ -66,7 +63,6 @@ class Data {
         "courierName": courierName,
         "shippingCost": shippingCost,
         "statusOrder": statusOrder,
-        
       };
 }
 
