@@ -91,7 +91,7 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                         const SizedBox(height: 20),
                         CustomButton(
-                          text: 'Sign In',
+                          text: 'Sign Up',
                           onTap: () {},
                         ),
                       ],
