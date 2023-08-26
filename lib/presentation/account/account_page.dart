@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce/data/models/response/auth_response_model.dart'
 import 'package:flutter_ecommerce/presentation/auth/auth_page.dart';
 import 'package:flutter_ecommerce/presentation/cart/cart_page.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:flutter_ecommerce/presentation/home/home_page.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -16,7 +17,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  final int _page = 0;
+  final int _page = 1;
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;
   User? user;
@@ -35,7 +36,7 @@ class _AccountPageState extends State<AccountPage> {
             height: 20,
           ),
           Text(
-            "Nama: ${user != null ? user!.username : '-'}",
+            "Nama: ${user != null ? user?.username : '-'}",
             textAlign: TextAlign.center,
           ),
           const SizedBox(
@@ -67,7 +68,7 @@ class _AccountPageState extends State<AccountPage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
+        currentIndex: 1,
         selectedItemColor: GlobalVariables.selectedNavBarColor,
         unselectedItemColor: GlobalVariables.unselectedNavBarColor,
         backgroundColor: GlobalVariables.backgroundColor,
@@ -88,8 +89,20 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                 ),
               ),
-              child: const Icon(
-                Icons.home_outlined,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const HomePage();
+                      },
+                    ),
+                  );
+                },
+                child: const Icon(
+                  Icons.home_outlined,
+                ),
               ),
             ),
             label: '',

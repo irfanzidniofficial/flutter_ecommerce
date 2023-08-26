@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce/presentation/home/widgets/banner_widget.dart';
 import 'package:flutter_ecommerce/presentation/home/widgets/list_category_widget.dart';
 import 'package:flutter_ecommerce/presentation/home/widgets/list_product_widget.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:flutter_ecommerce/presentation/search/search_page.dart';
 
 import '../../common/global_variables.dart';
 
@@ -21,6 +22,8 @@ class _HomePageState extends State<HomePage> {
   final int _page = 0;
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;
+  final TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +49,17 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(7),
                     elevation: 1,
                     child: TextFormField(
-                      onFieldSubmitted: (_) {},
+                      controller: searchController,
+                      onFieldSubmitted: (_) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return SearchPage(search: searchController.text);
+                            },
+                          ),
+                        );
+                      },
                       decoration: InputDecoration(
                         prefixIcon: InkWell(
                           onTap: () {},

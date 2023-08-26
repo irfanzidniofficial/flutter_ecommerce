@@ -6,6 +6,7 @@ import 'package:flutter_ecommerce/bloc/get_products/get_products_bloc.dart';
 import 'package:flutter_ecommerce/bloc/login/login_bloc.dart';
 import 'package:flutter_ecommerce/bloc/order/order_bloc.dart';
 import 'package:flutter_ecommerce/bloc/register/register_bloc.dart';
+import 'package:flutter_ecommerce/bloc/search/search_bloc.dart';
 import 'package:flutter_ecommerce/data/datasource/auth_remote_datasource.dart';
 import 'package:flutter_ecommerce/data/datasource/order_remote_datasource.dart';
 import 'package:flutter_ecommerce/data/datasource/product_remote_datasource.dart';
@@ -44,6 +45,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => RegisterBloc(
             (AuthRemoteDatasource()),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => SearchBloc(
+            (ProductRemoteDataSource()),
           ),
         ),
       ],

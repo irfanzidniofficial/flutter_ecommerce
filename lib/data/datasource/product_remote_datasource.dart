@@ -18,4 +18,18 @@ class ProductRemoteDataSource {
       return const Left("Proses Gagal");
     }
   }
+
+   Future<Either<String, ListProductResponseModel>> searchProduct(String name) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/products?filters[name][\$contains]=$name'),
+    );
+
+    if (response.statusCode == 200) {
+      return Right(
+        ListProductResponseModel.fromJson(response.body),
+      );
+    } else {
+      return const Left("Proses Gagal");
+    }
+  }
 }
