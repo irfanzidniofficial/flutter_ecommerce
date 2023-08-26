@@ -8,7 +8,7 @@ import 'package:flutter_ecommerce/data/models/request/order_request_model.dart';
 import 'package:logger/logger.dart';
 
 class CheckoutPage extends StatefulWidget {
-  const CheckoutPage({super.key});
+   CheckoutPage({super.key});
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -122,6 +122,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       0,
                       (sum, item) => sum + item.attributes!.price!,
                     );
+
                     final data = Data(
                       items: state.items
                           .map((e) => Item(

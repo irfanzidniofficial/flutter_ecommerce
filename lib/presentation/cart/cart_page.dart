@@ -142,7 +142,7 @@ class _CartPageState extends State<CartPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return const CheckoutPage();
+                        return CheckoutPage();
                       },
                     ),
                   );
@@ -408,13 +408,13 @@ class _CartPageState extends State<CartPage> {
               child: InkWell(
                 onTap: () {
                   Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const AccountPage();
-                              },
-                            ),
-                          );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const AccountPage();
+                      },
+                    ),
+                  );
                 },
                 child: const Icon(
                   Icons.person_outline_outlined,
