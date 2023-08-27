@@ -94,14 +94,15 @@ class _AccountPageState extends State<AccountPage> {
                     );
                   },
                   success: (data) {
+                    print('Datanya :$data');
                     return ListView.builder(
                       itemBuilder: (context, index) {
-                        final order = data.data?[index];
+                        final order = data.data![index];
                         return Card(
                           elevation: 3,
                           child: ListTile(
-                            title: Text("Order#${order?.id}"),
-                            subtitle: Text('${order?.attributes?.totalPrice}'),
+                            title: Text("Order#${order.id}"),
+                            subtitle: Text('${order.attributes!.totalPrice}'),
                           ),
                         );
                       },

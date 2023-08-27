@@ -45,7 +45,7 @@ class OrderRemoteDatasource {
 
     if (response.statusCode == 200) {
       return Right(
-        ListOrderResponseModel.fromJson(jsonDecode(response.body)),
+        ListOrderResponseModel.fromJson(response.body),
       );
     } else {
       return const Left("Server Error");
