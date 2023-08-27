@@ -4,11 +4,12 @@ import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/bloc/order/order_bloc.dart';
 import 'package:flutter_ecommerce/common/global_variables.dart';
 import 'package:flutter_ecommerce/common/snap_widget.dart';
+import 'package:flutter_ecommerce/data/datasource/auth_local_datasource.dart';
 import 'package:flutter_ecommerce/data/models/request/order_request_model.dart';
 import 'package:logger/logger.dart';
 
 class CheckoutPage extends StatefulWidget {
-   CheckoutPage({super.key});
+  CheckoutPage({super.key});
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -117,13 +118,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 var logger = Logger();
 
                 return ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    final userId = await AuthLocalDatasource().getUserId();
                     final total = state.items.fold(
                       0,
                       (sum, item) => sum + item.attributes!.price!,
                     );
 
                     final data = Data(
+                      userId: userId,
                       items: state.items
                           .map((e) => Item(
                                 id: e.id!,

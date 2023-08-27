@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // To parse this JSON data, do
 //
 //     final orderRequestModel = orderRequestModelFromJson(jsonString);
@@ -33,6 +34,7 @@ class Data {
   final String courierName;
   final int shippingCost;
   final String statusOrder;
+  final int userId;
 
   Data({
     required this.items,
@@ -41,6 +43,7 @@ class Data {
     required this.courierName,
     required this.shippingCost,
     required this.statusOrder,
+    required this.userId,
   });
 
   factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
@@ -54,6 +57,8 @@ class Data {
         courierName: json["courierName"],
         shippingCost: json["shippingCost"],
         statusOrder: json["statusOrder"],
+        userId: json["userId"],
+        
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,7 +68,10 @@ class Data {
         "courierName": courierName,
         "shippingCost": shippingCost,
         "statusOrder": statusOrder,
+        "userId": userId,
       };
+
+  
 }
 
 class Item {

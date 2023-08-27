@@ -25,6 +25,27 @@ class AuthLocalDatasource {
     return authData.jwt;
   }
 
+  Future<User> getUser() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    final authJson = pref.getString('auth') ?? '';
+    final authData = AuthResponseModel.fromJson(jsonDecode(authJson));
+    return authData.user;
+  }
+
+  Future<int> getUserId() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    final authJson = pref.getString('auth') ?? '';
+    final authData = AuthResponseModel.fromJson(jsonDecode(authJson));
+    return authData.user.id;
+  }
+
+  Future<AuthResponseModel> getAuthData() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    final authJson = pref.getString('auth') ?? '';
+    final authData = AuthResponseModel.fromJson(jsonDecode(authJson));
+    return authData;
+  }
+
   Future<bool> isLogin() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     final authJson = pref.getString('auth');
