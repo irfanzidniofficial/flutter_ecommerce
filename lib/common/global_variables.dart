@@ -6,24 +6,32 @@ final baseUrl = dotenv.env['BASE_URL'];
 class GlobalVariables {
   static const List<Map<String, String>> categoryImages = [
     {
-      'title': 'Mobiles',
-      'image': 'assets/images/mobiles.jpeg',
+      'title': 'Skincare',
+      'image': 'assets/icons/ic_skincare.png',
     },
     {
-      'title': 'Electronic',
-      'image': 'assets/images/electronics.jpeg',
+      'title': 'Jewellery',
+      'image': 'assets/icons/ic_jewellery.png',
     },
     {
-      'title': 'Appliances',
-      'image': 'assets/images/appliances.jpeg',
+      'title': 'Handbags',
+      'image': 'assets/icons/ic_handbags.png',
     },
     {
-      'title': 'Books',
-      'image': 'assets/images/books.jpeg',
+      'title': 'Watches',
+      'image': 'assets/icons/ic_watches.png',
     },
     {
-      'title': 'Fashion',
-      'image': 'assets/images/fashion.jpeg',
+      'title': 'Clothes',
+      'image': 'assets/icons/ic_watches.png',
+    },
+    {
+      'title': 'Watches',
+      'image': 'assets/icons/ic_jewellery.png',
+    },
+    {
+      'title': 'Watches',
+      'image': 'assets/icons/ic_watches.png',
     },
   ];
 

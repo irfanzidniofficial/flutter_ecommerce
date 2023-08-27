@@ -37,6 +37,8 @@ class _ListProductWidgetState extends State<ListProductWidget> {
             );
           }
           return GridView.builder(
+            physics: const PageScrollPhysics(),
+            shrinkWrap: true,
             itemCount: state.data.data!.length,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -63,17 +65,23 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                   shadowColor: const Color(0xFFEE4D2D),
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Hero(
-                        tag: product.attributes!.image!,
-                        child: SizedBox(
-                          height: 150,
-                          child: Image.network(
-                            product.attributes!.image!,
+                      ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                        child: Hero(
+                          tag: product.attributes!.image!,
+                          child: SizedBox(
+                            child: Image.network(
+                              product.attributes!.image!,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -94,6 +102,7 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
+                        maxLines: 1,
                       ),
                       const SizedBox(
                         height: 8,
@@ -105,7 +114,7 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                       Column(
                         children: [
                           const SizedBox(
-                            height: 10,
+                            height: 5,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -181,7 +190,10 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                                 ],
                               )
                             ],
-                          )
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
                         ],
                       )
                     ],

@@ -8,10 +8,12 @@ import 'package:flutter_ecommerce/bloc/login/login_bloc.dart';
 import 'package:flutter_ecommerce/bloc/order/order_bloc.dart';
 import 'package:flutter_ecommerce/bloc/register/register_bloc.dart';
 import 'package:flutter_ecommerce/bloc/search/search_bloc.dart';
+import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/data/datasource/auth_remote_datasource.dart';
 import 'package:flutter_ecommerce/data/datasource/order_remote_datasource.dart';
 import 'package:flutter_ecommerce/data/datasource/product_remote_datasource.dart';
 import 'package:flutter_ecommerce/presentation/home/home_page.dart';
+import 'package:flutter_ecommerce/routing/app_router.dart';
 
 Future<void> main() async {
   await dotenv.load();
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final router = AppRouter();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -63,10 +66,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: blackColor,
+          ),
           useMaterial3: true,
         ),
-        home: const HomePage(),
+        onGenerateRoute: router.onRoute,
       ),
     );
   }

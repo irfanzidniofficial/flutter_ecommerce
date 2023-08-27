@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/bloc/list_order/list_order_bloc.dart';
 import 'package:flutter_ecommerce/common/global_variables.dart';
+import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/data/datasource/auth_local_datasource.dart';
 import 'package:flutter_ecommerce/data/models/response/auth_response_model.dart';
-import 'package:flutter_ecommerce/presentation/auth/auth_page.dart';
+
+import 'package:flutter_ecommerce/presentation/auth/login_page.dart';
 import 'package:flutter_ecommerce/presentation/cart/cart_page.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_ecommerce/presentation/home/home_page.dart';
@@ -69,7 +71,7 @@ class _AccountPageState extends State<AccountPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return const AuthPage();
+                        return const LoginPage();
                       },
                     ),
                   );
@@ -215,7 +217,7 @@ class _AccountPageState extends State<AccountPage> {
                       // elevation: 0,
                       badgeContent: Text(
                         '${state.items.length}',
-                        style: const TextStyle(color: Color(0xffEE4D2D)),
+                        style: pinkTextStyle,
                       ),
                       // badgeColor: Colors.white,
                       child: InkWell(

@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/common/global_variables.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/data/datasource/auth_local_datasource.dart';
 import 'package:flutter_ecommerce/presentation/account/account_page.dart';
-import 'package:flutter_ecommerce/presentation/auth/auth_page.dart';
+
+import 'package:flutter_ecommerce/presentation/auth/login_page.dart';
 import 'package:flutter_ecommerce/presentation/checkout/checkout_page.dart';
 import 'package:flutter_ecommerce/presentation/home/home_page.dart';
 
@@ -151,7 +153,7 @@ class _CartPageState extends State<CartPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return const AuthPage();
+                        return const LoginPage();
                       },
                     ),
                   );
@@ -451,7 +453,7 @@ class _CartPageState extends State<CartPage> {
                       // elevation: 0,
                       badgeContent: Text(
                         '${state.items.length}',
-                        style: const TextStyle(color: Color(0xffEE4D2D)),
+                        style: pinkTextStyle,
                       ),
                       // badgeColor: Colors.white,
                       child: InkWell(

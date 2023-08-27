@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
+import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/presentation/account/account_page.dart';
 import 'package:flutter_ecommerce/presentation/cart/cart_page.dart';
 import 'package:flutter_ecommerce/presentation/home/widgets/banner_widget.dart';
@@ -32,10 +33,8 @@ class _HomePageState extends State<HomePage> {
         child: AppBar(
           automaticallyImplyLeading: false,
           flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              color: Color(
-                0xFFEE4D2D,
-              ),
+            decoration: BoxDecoration(
+              color: pinkColor,
             ),
           ),
           title: Row(
@@ -78,13 +77,15 @@ class _HomePageState extends State<HomePage> {
                           top: 10,
                         ),
                         border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(7),
-                            ),
-                            borderSide: BorderSide(
-                              color: Colors.black38,
-                              width: 1,
-                            )),
+                          gapPadding: 10,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(7),
+                          ),
+                          borderSide: BorderSide(
+                            color: Colors.black38,
+                            width: 1,
+                          ),
+                        ),
                         hintText: 'Search',
                         hintStyle: const TextStyle(
                           fontWeight: FontWeight.w500,
@@ -94,48 +95,162 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-              )
+              ),
+              BlocBuilder<CheckoutBloc, CheckoutState>(
+                builder: (context, state) {
+                  if (state is CheckoutError) {
+                    return const Center(
+                      child: Text("Data Error"),
+                    );
+                  }
+                  if (state is CheckoutSuccess) {
+                    return badges.Badge(
+                      badgeStyle: const badges.BadgeStyle(
+                          elevation: 0, badgeColor: Colors.white),
+                      // elevation: 0,
+                      badgeContent: Text(
+                        '${state.items.length}',
+                        style: pinkTextStyle,
+                      ),
+                      // badgeColor: Colors.white,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const CartPage();
+                              },
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.shopping_cart_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    );
+                  }
+                  return const Text("Loading");
+                },
+              ),
             ],
           ),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
+        shrinkWrap: false,
         children: [
-          const SizedBox(
-            height: 16,
-          ),
-          const ListCategoryWidget(),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: const BannerWidget(),
-            ),
-          ),
-          const SizedBox(
-            height: 14,
-          ),
-          const Padding(
-            padding: EdgeInsets.only(
-              left: 16,
-            ),
-            child: Text(
-              "List Produk",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 10,
               ),
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          const Expanded(
-            child: ListProductWidget(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: const BannerWidget(),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: Text(
+                  "Top Categories",
+                  style: blackTextStyle.copyWith(
+                    fontSize: 18,
+                    fontWeight: semiBold,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const ListCategoryWidget(),
+              const SizedBox(
+                height: 14,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 16,
+                ),
+                child: Text(
+                  "Popular Product",
+                  style: blackTextStyle.copyWith(
+                    fontSize: 18,
+                    fontWeight: semiBold,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              const ListProductWidget(),
+              const SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 16,
+                ),
+                child: Text(
+                  "Makeup & Skincare",
+                  style: blackTextStyle.copyWith(
+                    fontSize: 18,
+                    fontWeight: semiBold,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Image.asset(
+                      'assets/images/img_banner_mackup01.png',
+                      width: double.infinity,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Image.asset(
+                            'assets/images/img_banner_mackup02.png',
+                            width: double.infinity,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Image.asset(
+                            'assets/images/img_banner_mackup03.png',
+                            width: double.infinity,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
         ],
       ),
@@ -227,7 +342,7 @@ class _HomePageState extends State<HomePage> {
                       // elevation: 0,
                       badgeContent: Text(
                         '${state.items.length}',
-                        style: const TextStyle(color: Color(0xffEE4D2D)),
+                        style: pinkTextStyle,
                       ),
                       // badgeColor: Colors.white,
                       child: InkWell(
