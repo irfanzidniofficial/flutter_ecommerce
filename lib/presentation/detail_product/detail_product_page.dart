@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
+import 'package:flutter_ecommerce/common/theme.dart';
 
 import 'package:flutter_ecommerce/data/models/response/list_product_response_model.dart';
 import 'package:flutter_ecommerce/presentation/cart/cart_page.dart';
@@ -48,16 +49,26 @@ class _DetailProductPageState extends State<DetailProductPage> {
           ),
           Text(
             'Rp. ${widget.product.attributes?.price}',
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+            style: pinkTextStyle.copyWith(
+              fontSize: 20,
+              fontWeight: bold,
             ),
           ),
           const SizedBox(
             height: 10,
           ),
           Text(
+            "Deskripsi Produk",
+            style: blackTextStyle.copyWith(fontSize: 16, fontWeight: bold),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
             widget.product.attributes?.description ?? '',
+            style: blackTextStyle.copyWith(
+              fontSize: 16,
+            ),
           ),
           const SizedBox(
             height: 20,
@@ -78,7 +89,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 if (state is CheckoutSuccess) {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) {
-                      return CartPage();
+                      return const CartPage();
                     },
                   ));
                 }

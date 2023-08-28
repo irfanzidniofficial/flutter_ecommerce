@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/bloc/get_products/get_products_bloc.dart';
+import 'package:flutter_ecommerce/common/app_format.dart';
+import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/presentation/detail_product/detail_product_page.dart';
 
 import '../../../data/models/response/list_product_response_model.dart';
@@ -89,9 +91,11 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                         height: 8,
                       ),
                       Text(
-                        product.attributes!.price!.toString(),
-                        style: const TextStyle(
-                          color: Color(0xFFEE4D2D),
+                        AppFormat.longPrice(
+                          product.attributes!.price!.toInt(),
+                        ),
+                        style: TextStyle(
+                          color: pinkColor,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
@@ -119,20 +123,20 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Row(
+                              Row(
                                 children: [
                                   Icon(
                                     Icons.shopping_cart,
                                     size: 18,
-                                    color: Color(0xffEE4D2D),
+                                    color: pinkColor,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 5,
                                   ),
                                   Text(
                                     "Beli",
                                     style: TextStyle(
-                                      color: Color(0xffEE4D2D),
+                                      color: pinkColor,
                                       fontSize: 16,
                                     ),
                                   ),
@@ -151,10 +155,10 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                                             ),
                                           );
                                     },
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.remove_circle_outline,
                                       size: 18,
-                                      color: Color(0xffEE4D2D),
+                                      color: pinkColor,
                                     ),
                                   ),
                                   Padding(
@@ -181,10 +185,10 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                                             AddtoCartEvent(product: product),
                                           );
                                     },
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.add_circle_outline,
                                       size: 18,
-                                      color: Color(0xffEE4D2D),
+                                      color: pinkColor,
                                     ),
                                   ),
                                 ],

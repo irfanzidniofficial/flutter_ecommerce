@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
+import 'package:flutter_ecommerce/common/app_format.dart';
 import 'package:flutter_ecommerce/common/global_variables.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_ecommerce/common/theme.dart';
@@ -26,67 +27,9 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              color: Color(
-                0xFFEE4D2D,
-              ),
-            ),
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Container(
-                  height: 42,
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(7),
-                    elevation: 1,
-                    child: TextFormField(
-                      onFieldSubmitted: (_) {},
-                      decoration: InputDecoration(
-                        prefixIcon: InkWell(
-                          onTap: () {},
-                          child: const Padding(
-                            padding: EdgeInsets.only(left: 6),
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.black,
-                              size: 23,
-                            ),
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.only(
-                          top: 10,
-                        ),
-                        border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(7),
-                            ),
-                            borderSide: BorderSide(
-                              color: Colors.black38,
-                              width: 1,
-                            )),
-                        hintText: 'Search',
-                        hintStyle: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
+      appBar: AppBar(
+        title: const Text("My Cart"),
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [
@@ -100,13 +43,6 @@ class _CartPageState extends State<CartPage> {
                     fontSize: 20,
                   ),
                 ),
-                const Text(
-                  'Rp ',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
                 BlocBuilder<CheckoutBloc, CheckoutState>(
                   builder: (context, state) {
                     if (state is CheckoutSuccess) {
@@ -115,7 +51,7 @@ class _CartPageState extends State<CartPage> {
                         (sum, item) => sum + item.attributes!.price!,
                       );
                       return Text(
-                        '$total',
+                        AppFormat.longPrice(total),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -186,59 +122,73 @@ class _CartPageState extends State<CartPage> {
                   child: ListView.builder(
                     itemCount: uniqItem,
                     itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
-                            child: Row(
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: greyColor,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Image.network(
-                                  dataSet.elementAt(index).attributes!.image!,
-                                  fit: BoxFit.fitWidth,
-                                  height: 135,
-                                  width: 135,
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Image.network(
+                                    dataSet.elementAt(index).attributes!.image!,
+                                    fit: BoxFit.fitWidth,
+                                    height: 120,
+                                    width: 120,
+                                  ),
                                 ),
                                 Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      width: 235,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                      ),
                                       child: Text(
                                         '${dataSet.elementAt(index).attributes!.name}',
                                         style: const TextStyle(
                                           fontSize: 16,
                                         ),
-                                        maxLines: 2,
+                                        maxLines: 1,
                                       ),
                                     ),
+                                    //   '${dataSet.elementAt(index).attributes!.price}',
+                                    //
                                     Container(
-                                      width: 235,
                                       padding: const EdgeInsets.only(
-                                          left: 10, top: 5),
+                                          left: 10, top: 2),
                                       child: Text(
-                                        '${dataSet.elementAt(index).attributes!.price}',
+                                        AppFormat.longPrice(dataSet
+                                            .elementAt(index)
+                                            .attributes!
+                                            .price!
+                                            .toInt()),
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                        maxLines: 2,
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 235,
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        '${dataSet.elementAt(index).attributes!.description}',
                                         maxLines: 1,
                                       ),
                                     ),
+
                                     Container(
-                                      width: 235,
                                       padding: const EdgeInsets.only(
-                                          left: 10, top: 5),
+                                        left: 10,
+                                        bottom: 8,
+                                      ),
                                       child: const Text(
                                         'In Stock',
                                         style: TextStyle(
@@ -247,102 +197,117 @@ class _CartPageState extends State<CartPage> {
                                         maxLines: 2,
                                       ),
                                     ),
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.black12,
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: Colors.black12,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    context
+                                                        .read<CheckoutBloc>()
+                                                        .add(
+                                                          RemoveFromCartEvent(
+                                                            product: dataSet
+                                                                .elementAt(
+                                                                    index),
+                                                          ),
+                                                        );
+                                                  },
+                                                  child: Container(
+                                                    width: 35,
+                                                    height: 32,
+                                                    alignment: Alignment.center,
+                                                    child: const Icon(
+                                                      Icons.remove,
+                                                      size: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                                DecoratedBox(
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.black12,
+                                                        width: 1.5),
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            0),
+                                                  ),
+                                                  child: Container(
+                                                    width: 35,
+                                                    height: 32,
+                                                    alignment: Alignment.center,
+                                                    child: BlocBuilder<
+                                                        CheckoutBloc,
+                                                        CheckoutState>(
+                                                      builder:
+                                                          (context, state) {
+                                                        if (state
+                                                            is CheckoutSuccess) {
+                                                          final countItem = state
+                                                              .items
+                                                              .where((element) =>
+                                                                  element.id ==
+                                                                  dataSet
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .id)
+                                                              .length;
+                                                          return Text(
+                                                              '$countItem');
+                                                        }
+                                                        return const Text('0');
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    context
+                                                        .read<CheckoutBloc>()
+                                                        .add(
+                                                          AddtoCartEvent(
+                                                              product: dataSet
+                                                                  .elementAt(
+                                                                      index)),
+                                                        );
+                                                  },
+                                                  child: Container(
+                                                    width: 35,
+                                                    height: 32,
+                                                    alignment: Alignment.center,
+                                                    child: const Icon(
+                                                      Icons.add,
+                                                      size: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
                             ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.all(10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Colors.black12,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          context.read<CheckoutBloc>().add(
-                                                RemoveFromCartEvent(
-                                                  product:
-                                                      dataSet.elementAt(index),
-                                                ),
-                                              );
-                                        },
-                                        child: Container(
-                                          width: 35,
-                                          height: 32,
-                                          alignment: Alignment.center,
-                                          child: const Icon(
-                                            Icons.remove,
-                                            size: 18,
-                                          ),
-                                        ),
-                                      ),
-                                      DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.black12,
-                                              width: 1.5),
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(0),
-                                        ),
-                                        child: Container(
-                                          width: 35,
-                                          height: 32,
-                                          alignment: Alignment.center,
-                                          child: BlocBuilder<CheckoutBloc,
-                                              CheckoutState>(
-                                            builder: (context, state) {
-                                              if (state is CheckoutSuccess) {
-                                                final countItem = state.items
-                                                    .where((element) =>
-                                                        element.id ==
-                                                        dataSet
-                                                            .elementAt(index)
-                                                            .id)
-                                                    .length;
-                                                return Text('$countItem');
-                                              }
-                                              return const Text('0');
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          context.read<CheckoutBloc>().add(
-                                                AddtoCartEvent(
-                                                    product: dataSet
-                                                        .elementAt(index)),
-                                              );
-                                        },
-                                        child: Container(
-                                          width: 35,
-                                          height: 32,
-                                          alignment: Alignment.center,
-                                          child: const Icon(
-                                            Icons.add,
-                                            size: 18,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     },
                   ),

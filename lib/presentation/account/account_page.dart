@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/bloc/list_order/list_order_bloc.dart';
+import 'package:flutter_ecommerce/common/app_format.dart';
 import 'package:flutter_ecommerce/common/global_variables.dart';
 import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/data/datasource/auth_local_datasource.dart';
@@ -96,15 +97,153 @@ class _AccountPageState extends State<AccountPage> {
                     );
                   },
                   success: (data) {
-                    print('Datanya :$data');
                     return ListView.builder(
                       itemBuilder: (context, index) {
                         final order = data.data![index];
-                        return Card(
-                          elevation: 3,
-                          child: ListTile(
-                            title: Text("Order#${order.id}"),
-                            subtitle: Text('${order.attributes!.statusOrder}'),
+                        // return Card(
+                        //   elevation: 3,
+                        //   child: ListTile(
+                        //     title: Text("Order#${order.id}"),
+                        //     subtitle: Text('${order.attributes!.statusOrder}'),
+                        //   ),
+                        // );
+                        return Container(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: greyColor,
+                            ),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.local_mall_outlined,
+                                    size: 25,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Shopping",
+                                        style: blackTextStyle.copyWith(
+                                          fontSize: 14,
+                                          fontWeight: semiBold,
+                                        ),
+                                      ),
+                                      Text(
+                                        AppFormat.shortDate(
+                                          order.attributes!.updatedAt,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    '${order.attributes!.statusOrder}',
+                                    style: greenTextStyle.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: medium,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  const Icon(
+                                    Icons.more_vert,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              const Divider(
+                                thickness: 2,
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: Image.network(
+                                        // order.attributes!.items!.map((e) => ),
+                                        "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/5/13/07d6960f-cac5-4c79-9011-83d1155ec62b.jpg",
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${order.attributes!.items!.elementAt(index).productName}',
+                                        style: blackTextStyle.copyWith(
+                                          fontSize: 16,
+                                          fontWeight: semiBold,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      // final count = state.items
+                                      //   .where((element) =>
+                                      //     element.id == dataSet.elementAt(index).id)
+                                      //.length;
+                                      const Text("9 barang"),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Total Belanja",
+                                style: blackTextStyle.copyWith(
+                                    fontSize: 12, fontWeight: medium),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                AppFormat.longPrice(
+                                  order.attributes!.totalPrice!,
+                                ),
+                                style: blackTextStyle.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: bold,
+                                ),
+                              ),
+                            ],
                           ),
                         );
                       },
