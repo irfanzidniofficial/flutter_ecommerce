@@ -36,8 +36,8 @@ class GlobalVariables {
   ];
 
   static const List<String> bannerImages = [
-    'https://storage.googleapis.com/astro-site/home/new-user.webp',
-    'https://storage.googleapis.com/astro-site/home/24jam.webp',
+    'assets/images/img_banner_promo1.png', 
+    'assets/images/img_banner_promo2.png',
   ];
 
   static const backgroundColor = Colors.white;

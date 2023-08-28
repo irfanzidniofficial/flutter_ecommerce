@@ -7,21 +7,23 @@ class BannerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-      items: GlobalVariables.bannerImages.map((i) {
-        return Builder(
-          builder: (context) => Image.network(
-            i,
-            fit: BoxFit.cover,
-            height: 200,
-            scale: 1,
-          ),
-        );
-      }).toList(),
-      options: CarouselOptions(
-        viewportFraction: 1,
-        height: 150,
-        autoPlay: true,
+    return Expanded(
+      child: CarouselSlider(
+        items: GlobalVariables.bannerImages.map((i) {
+          return Builder(
+            builder: (context) => Image.asset(
+              i,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              scale: 1,
+            ),
+          );
+        }).toList(),
+        options: CarouselOptions(
+          viewportFraction: 1,
+          height: 222,
+          autoPlay: true,
+        ),
       ),
     );
   }

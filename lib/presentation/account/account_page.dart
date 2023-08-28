@@ -104,7 +104,7 @@ class _AccountPageState extends State<AccountPage> {
                           elevation: 3,
                           child: ListTile(
                             title: Text("Order#${order.id}"),
-                            subtitle: Text('${order.attributes!.totalPrice}'),
+                            subtitle: Text('${order.attributes!.statusOrder}'),
                           ),
                         );
                       },
