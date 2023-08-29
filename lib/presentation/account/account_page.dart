@@ -7,7 +7,6 @@ import 'package:flutter_ecommerce/common/global_variables.dart';
 import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/data/datasource/auth_local_datasource.dart';
 import 'package:flutter_ecommerce/data/models/response/auth_response_model.dart';
-
 import 'package:flutter_ecommerce/presentation/auth/login_page.dart';
 import 'package:flutter_ecommerce/presentation/cart/cart_page.dart';
 import 'package:badges/badges.dart' as badges;
@@ -100,13 +99,8 @@ class _AccountPageState extends State<AccountPage> {
                     return ListView.builder(
                       itemBuilder: (context, index) {
                         final order = data.data![index];
-                        // return Card(
-                        //   elevation: 3,
-                        //   child: ListTile(
-                        //     title: Text("Order#${order.id}"),
-                        //     subtitle: Text('${order.attributes!.statusOrder}'),
-                        //   ),
-                        // );
+                        final items = order.attributes!.items!.first;
+
                         return Container(
                           margin: const EdgeInsets.symmetric(
                             horizontal: 10,
@@ -186,13 +180,21 @@ class _AccountPageState extends State<AccountPage> {
                                     width: 50,
                                     height: 50,
                                     decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: greyColor,
+                                        width: 3,
+                                      ),
                                       borderRadius: BorderRadius.circular(12),
+                                      color: whiteColor,
                                     ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: Image.network(
-                                        // order.attributes!.items!.map((e) => ),
-                                        "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/5/13/07d6960f-cac5-4c79-9011-83d1155ec62b.jpg",
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "ID:${order.id}",
+                                        textAlign: TextAlign.center,
+                                        style: blackTextStyle.copyWith(
+                                          fontSize: 14,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -205,7 +207,7 @@ class _AccountPageState extends State<AccountPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '${order.attributes!.items!.elementAt(index).productName}',
+                                        '${items.productName}',
                                         style: blackTextStyle.copyWith(
                                           fontSize: 16,
                                           fontWeight: semiBold,
@@ -214,11 +216,7 @@ class _AccountPageState extends State<AccountPage> {
                                       const SizedBox(
                                         height: 5,
                                       ),
-                                      // final count = state.items
-                                      //   .where((element) =>
-                                      //     element.id == dataSet.elementAt(index).id)
-                                      //.length;
-                                      const Text("9 barang"),
+                                      const Text("3 barang"),
                                     ],
                                   )
                                 ],

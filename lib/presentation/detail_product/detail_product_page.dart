@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
+import 'package:flutter_ecommerce/common/app_format.dart';
 import 'package:flutter_ecommerce/common/theme.dart';
 
 import 'package:flutter_ecommerce/data/models/response/list_product_response_model.dart';
@@ -48,7 +49,9 @@ class _DetailProductPageState extends State<DetailProductPage> {
             height: 10,
           ),
           Text(
-            'Rp. ${widget.product.attributes?.price}',
+            AppFormat.longPrice(
+              widget.product.attributes?.price?.toInt() ?? 0,
+            ),
             style: pinkTextStyle.copyWith(
               fontSize: 20,
               fontWeight: bold,

@@ -152,9 +152,6 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 10,
-                    ),
-                    const SizedBox(
                       height: 16,
                     ),
                     Padding(

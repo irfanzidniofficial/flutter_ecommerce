@@ -165,8 +165,6 @@ class _CartPageState extends State<CartPage> {
                                         maxLines: 1,
                                       ),
                                     ),
-                                    //   '${dataSet.elementAt(index).attributes!.price}',
-                                    //
                                     Container(
                                       padding: const EdgeInsets.only(
                                           left: 10, top: 2),
@@ -183,7 +181,6 @@ class _CartPageState extends State<CartPage> {
                                         maxLines: 1,
                                       ),
                                     ),
-
                                     Container(
                                       padding: const EdgeInsets.only(
                                         left: 10,
