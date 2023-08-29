@@ -5,6 +5,7 @@ class CustomFilledButton extends StatelessWidget {
   final String title;
   final double width;
   final double height;
+  final double radius;
   final VoidCallback? onPressed;
 
   const CustomFilledButton({
@@ -12,6 +13,7 @@ class CustomFilledButton extends StatelessWidget {
     required this.title,
     this.width = double.infinity,
     this.height = 50,
+    this.radius = 20,
     this.onPressed,
   }) : super(key: key);
 
@@ -25,7 +27,7 @@ class CustomFilledButton extends StatelessWidget {
         style: TextButton.styleFrom(
           backgroundColor: pinkColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(radius),
           ),
         ),
         child: Text(

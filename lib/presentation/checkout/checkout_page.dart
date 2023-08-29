@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/bloc/order/order_bloc.dart';
-import 'package:flutter_ecommerce/common/global_variables.dart';
+import 'package:flutter_ecommerce/common/app_format.dart';
+import 'package:flutter_ecommerce/common/custom_button.dart';
+
 import 'package:flutter_ecommerce/common/snap_widget.dart';
+import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/data/datasource/auth_local_datasource.dart';
 import 'package:flutter_ecommerce/data/models/request/order_request_model.dart';
 import 'package:logger/logger.dart';
 
 class CheckoutPage extends StatefulWidget {
-  CheckoutPage({super.key});
+  const CheckoutPage({super.key});
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -20,33 +23,80 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: GlobalVariables.backgroundColor,
       appBar: AppBar(
-        title: const Text("Checkout Page"),
+        title: const Text("Checkout"),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Alamat Pengiriman"),
             const SizedBox(
-              height: 8,
+              height: 15,
             ),
-            TextField(
-              controller: addressController,
-              maxLines: 3,
-              decoration: const InputDecoration(
-                labelText: "",
-                border: OutlineInputBorder(),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 16,
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.pin_drop_outlined,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    "Alamat Pengiriman",
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(
               height: 10,
             ),
-            const Text("Item Produck"),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: TextField(
+                controller: addressController,
+                maxLines: 2,
+                decoration: const InputDecoration(
+                  labelText: "",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
             const SizedBox(
-              height: 10,
+              height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.shopping_bag_outlined,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    "Product Item",
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 8,
             ),
             BlocBuilder<CheckoutBloc, CheckoutState>(
               builder: (context, state) {
@@ -60,19 +110,45 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             .where((element) =>
                                 element.id == dataSet.elementAt(index).id)
                             .length;
-                        return ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                              dataSet.elementAt(index).attributes!.image!,
+
+                        return Container(
+                          decoration:
+                              BoxDecoration(color: greyColor.withOpacity(0.1)),
+                          child: ListTile(
+                            minVerticalPadding: 0,
+                            horizontalTitleGap: 12,
+                            contentPadding:
+                                const EdgeInsets.only(left: 10, right: 10),
+                            leading: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  dataSet.elementAt(index).attributes!.image!,
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              dataSet.elementAt(index).attributes!.name!,
+                              style: blackTextStyle.copyWith(
+                                fontSize: 14,
+                              ),
+                            ),
+                            subtitle: Text(
+                              AppFormat.longPrice(
+                                dataSet.elementAt(index).attributes!.price!,
+                              ),
+                            ),
+                            trailing: Text(
+                              '$count',
+                              style: blackTextStyle.copyWith(
+                                fontSize: 13,
+                              ),
                             ),
                           ),
-                          title: Text(
-                            dataSet.elementAt(index).attributes!.name!,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          trailing: Text('$count'),
                         );
                       },
                       itemCount: uniqueItem,
@@ -117,49 +193,38 @@ class _CheckoutPageState extends State<CheckoutPage> {
               if (state is CheckoutSuccess) {
                 var logger = Logger();
 
-                return ElevatedButton(
-                  onPressed: () async {
-                    final userId = await AuthLocalDatasource().getUserId();
-                    final total = state.items.fold(
-                      0,
-                      (sum, item) => sum + item.attributes!.price!,
-                    );
+                return CustomFilledButton(
+                    title: 'Pay',
+                    onPressed: () async {
+                      final userId = await AuthLocalDatasource().getUserId();
+                      final total = state.items.fold(
+                        0,
+                        (sum, item) => sum + item.attributes!.price!,
+                      );
 
-                    final data = Data(
-                      userId: userId,
-                      items: state.items
-                          .map((e) => Item(
-                                id: e.id!,
-                                productName: e.attributes!.name!,
-                                price: e.attributes!.price!,
-                                qty: e.attributes!.price!,
-                              ))
-                          .toList(),
-                      courierName: 'JNE',
-                      deliveryAddress: addressController.text,
-                      shippingCost: 80000,
-                      statusOrder: 'waitingPayment',
-                      totalPrice: total,
-                    );
-                    final OrderRequestModel requestModel =
-                        OrderRequestModel(data: data);
-                    context.read<OrderBloc>().add(
-                          OrderEvent.doOrder(requestModel),
-                        );
-                    logger.i("Info Log");
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(
-                      0xFFEE4D2D,
-                    ),
-                  ),
-                  child: const Text(
-                    "Bayar",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                );
+                      final data = Data(
+                        userId: userId,
+                        items: state.items
+                            .map((e) => Item(
+                                  id: e.id!,
+                                  productName: e.attributes!.name!,
+                                  price: e.attributes!.price!,
+                                  qty: e.attributes!.price!,
+                                ))
+                            .toList(),
+                        courierName: 'JNE',
+                        deliveryAddress: addressController.text,
+                        shippingCost: 80000,
+                        statusOrder: 'waitingPayment',
+                        totalPrice: total,
+                      );
+                      final OrderRequestModel requestModel =
+                          OrderRequestModel(data: data);
+                      context.read<OrderBloc>().add(
+                            OrderEvent.doOrder(requestModel),
+                          );
+                      logger.i("Info Log");
+                    });
               }
               return const Center(
                 child: CircularProgressIndicator(),

@@ -134,7 +134,7 @@ class _ListProductWidgetState extends State<ListProductWidget> {
                                     width: 5,
                                   ),
                                   Text(
-                                    "Beli",
+                                    "Buy",
                                     style: TextStyle(
                                       color: pinkColor,
                                       fontSize: 16,

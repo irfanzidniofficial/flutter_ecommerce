@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/common/theme.dart';
-import 'package:flutter_ecommerce/presentation/account/account_page.dart';
-import 'package:flutter_ecommerce/presentation/cart/cart_page.dart';
+
+
 import 'package:flutter_ecommerce/presentation/home/widgets/banner_widget.dart';
 import 'package:flutter_ecommerce/presentation/home/widgets/list_category_widget.dart';
 import 'package:flutter_ecommerce/presentation/home/widgets/list_product_widget.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_ecommerce/presentation/search/search_page.dart';
-
-import '../../common/global_variables.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,9 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int _page = 0;
-  double bottomBarWidth = 42;
-  double bottomBarBorderWidth = 5;
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -116,14 +111,7 @@ class _HomePageState extends State<HomePage> {
                         // badgeColor: Colors.white,
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return const CartPage();
-                                },
-                              ),
-                            );
+                            Navigator.pushNamed(context, '/cart');
                           },
                           child: const Icon(
                             Icons.shopping_cart_outlined,
@@ -206,127 +194,14 @@ class _HomePageState extends State<HomePage> {
                       height: 8,
                     ),
                     makeupAndSkincareWidget(),
+                    const SizedBox(
+                      height: 10,
+                    ),
                   ],
                 ),
               ],
             ),
           )
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: GlobalVariables.selectedNavBarColor,
-        unselectedItemColor: GlobalVariables.unselectedNavBarColor,
-        backgroundColor: GlobalVariables.backgroundColor,
-        iconSize: 28,
-        onTap: (index) {},
-        items: [
-          // HOME
-          BottomNavigationBarItem(
-            icon: Container(
-              width: bottomBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: _page == 0
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
-                  ),
-                ),
-              ),
-              child: const Icon(
-                Icons.home_outlined,
-              ),
-            ),
-            label: '',
-          ),
-          // ACCOUNT
-          BottomNavigationBarItem(
-            icon: Container(
-              width: bottomBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: _page == 1
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
-                  ),
-                ),
-              ),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const AccountPage();
-                      },
-                    ),
-                  );
-                },
-                child: const Icon(
-                  Icons.person_outline_outlined,
-                ),
-              ),
-            ),
-            label: '',
-          ),
-          // CART
-          BottomNavigationBarItem(
-            icon: Container(
-              width: bottomBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: _page == 2
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
-                  ),
-                ),
-              ),
-              child: BlocBuilder<CheckoutBloc, CheckoutState>(
-                builder: (context, state) {
-                  if (state is CheckoutError) {
-                    return const Center(
-                      child: Text("Data Error"),
-                    );
-                  }
-                  if (state is CheckoutSuccess) {
-                    return badges.Badge(
-                      badgeStyle: const badges.BadgeStyle(
-                          elevation: 0, badgeColor: Colors.white),
-                      // elevation: 0,
-                      badgeContent: Text(
-                        '${state.items.length}',
-                        style: pinkTextStyle,
-                      ),
-                      // badgeColor: Colors.white,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const CartPage();
-                              },
-                            ),
-                          );
-                        },
-                        child: const Icon(
-                          Icons.shopping_cart_outlined,
-                        ),
-                      ),
-                    );
-                  }
-                  return const Text("Loading");
-                },
-              ),
-            ),
-            label: '',
-          ),
         ],
       ),
     );

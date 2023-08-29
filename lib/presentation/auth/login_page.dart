@@ -6,8 +6,8 @@ import 'package:flutter_ecommerce/common/custom_formfield.dart';
 import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/data/datasource/auth_local_datasource.dart';
 import 'package:flutter_ecommerce/data/models/request/login_request_model.dart';
-import 'package:flutter_ecommerce/presentation/auth/register_page.dart';
-import 'package:flutter_ecommerce/presentation/home/home_page.dart';
+
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -96,14 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                           if (state is LoginSuccess) {
                             await AuthLocalDatasource()
                                 .saveAuthData(state.model);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return const HomePage();
-                                },
-                              ),
-                            );
+                            Navigator.pushNamed(context, '/');
                           }
                           if (state is LoginError) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -181,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 180,
                   title: "Continue as Guest",
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.pushNamed(context, '/');
                   },
                 ),
               ),

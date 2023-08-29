@@ -29,21 +29,6 @@ class ListCategoryWidget extends StatelessWidget {
                   height: 36,
                 ),
               ),
-
-              // Container(
-              //   padding: const EdgeInsets.symmetric(
-              //     horizontal: 10,
-              //   ),
-              //   child: ClipRRect(
-              //     borderRadius: BorderRadius.circular(50),
-              //     child: Image.asset(
-              //       GlobalVariables.categoryImages[index]['image']!,
-              //       fit: BoxFit.cover,
-              //       height: 40,
-              //       width: 40,
-              //     ),
-              //   ),
-              // ),
               const SizedBox(
                 height: 4,
               ),

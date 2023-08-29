@@ -50,6 +50,8 @@ dependencies:
   rive: ^0.9.1
   google_fonts: ^4.0.4
   intl: ^0.18.1
+  grouped_list: ^5.1.2
+  animated_bottom_navigation_bar: ^1.2.0
 
 dev_dependencies:
   flutter_test:

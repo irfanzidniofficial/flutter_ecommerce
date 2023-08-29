@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_ecommerce/bloc/bottom_nav/bottom_nav_cubit.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/bloc/get_products/get_products_bloc.dart';
 import 'package:flutter_ecommerce/bloc/list_order/list_order_bloc.dart';
@@ -12,7 +13,7 @@ import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/data/datasource/auth_remote_datasource.dart';
 import 'package:flutter_ecommerce/data/datasource/order_remote_datasource.dart';
 import 'package:flutter_ecommerce/data/datasource/product_remote_datasource.dart';
-import 'package:flutter_ecommerce/presentation/home/home_page.dart';
+
 import 'package:flutter_ecommerce/routing/app_router.dart';
 
 Future<void> main() async {
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
     final router = AppRouter();
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (_) => BottomNavCubit(),
+        ),
         BlocProvider(
           create: (context) => GetProductsBloc(
             ProductRemoteDataSource(),

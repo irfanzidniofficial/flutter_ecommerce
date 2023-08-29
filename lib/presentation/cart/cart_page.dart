@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter_ecommerce/common/app_format.dart';
-import 'package:flutter_ecommerce/common/global_variables.dart';
-import 'package:badges/badges.dart' as badges;
+import 'package:flutter_ecommerce/common/custom_button.dart';
+
 import 'package:flutter_ecommerce/common/theme.dart';
 import 'package:flutter_ecommerce/data/datasource/auth_local_datasource.dart';
-import 'package:flutter_ecommerce/presentation/account/account_page.dart';
 
 import 'package:flutter_ecommerce/presentation/auth/login_page.dart';
 import 'package:flutter_ecommerce/presentation/checkout/checkout_page.dart';
-import 'package:flutter_ecommerce/presentation/home/home_page.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -20,99 +18,15 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  int page = 2;
-  double bottomBarWidth = 42;
-  double bottomBarBorderWidth = 5;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("My Cart"),
-        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                const Text(
-                  'Subtotal ',
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                BlocBuilder<CheckoutBloc, CheckoutState>(
-                  builder: (context, state) {
-                    if (state is CheckoutSuccess) {
-                      final total = state.items.fold(
-                        0,
-                        (sum, item) => sum + item.attributes!.price!,
-                      );
-                      return Text(
-                        AppFormat.longPrice(total),
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    }
-                    return const Text(
-                      'Calculate..',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              onPressed: () async {
-                final isLogin = await AuthLocalDatasource().isLogin();
-                if (isLogin) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return CheckoutPage();
-                      },
-                    ),
-                  );
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const LoginPage();
-                      },
-                    ),
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 50),
-                backgroundColor: const Color(0xffEE4D2D),
-              ),
-              child: const Text(
-                'Checkout',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 15),
-          Container(
-            color: Colors.black12.withOpacity(0.08),
-            height: 1,
-          ),
-          const SizedBox(height: 5),
+          // Widget List Order
           BlocBuilder<CheckoutBloc, CheckoutState>(
             builder: (context, state) {
               if (state is CheckoutSuccess) {
@@ -315,133 +229,108 @@ class _CartPageState extends State<CartPage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2,
-        selectedItemColor: GlobalVariables.selectedNavBarColor,
-        unselectedItemColor: GlobalVariables.unselectedNavBarColor,
-        backgroundColor: GlobalVariables.backgroundColor,
-        iconSize: 28,
-        onTap: (index) {},
-        items: [
-          // HOME
-          BottomNavigationBarItem(
-            icon: Container(
-              width: bottomBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: page == 0
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
-                  ),
-                ),
-              ),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const HomePage();
-                      },
-                    ),
-                  );
-                },
-                child: const Icon(
-                  Icons.home_outlined,
-                ),
-              ),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        height: 60,
+        decoration: BoxDecoration(
+          color: whiteColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 3,
+              offset: const Offset(0, 3), // changes position of shadow
             ),
-            label: '',
-          ),
-          // ACCOUNT
-          BottomNavigationBarItem(
-            icon: Container(
-              width: bottomBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: page == 1
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
-                  ),
-                ),
-              ),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const AccountPage();
-                      },
-                    ),
-                  );
-                },
-                child: const Icon(
-                  Icons.person_outline_outlined,
-                ),
-              ),
+          ],
+          border: Border(
+            top: BorderSide(
+              color: greyColor.withOpacity(0.5),
             ),
-            label: '',
           ),
-          // CART
-          BottomNavigationBarItem(
-            icon: Container(
-              width: bottomBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: page == 2
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
+        ),
+        alignment: Alignment.bottomCenter,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                  ),
+                  child: Text(
+                    'Total: ',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
-              child: BlocBuilder<CheckoutBloc, CheckoutState>(
-                builder: (context, state) {
-                  if (state is CheckoutError) {
-                    return const Center(
-                      child: Text("Data Error"),
-                    );
-                  }
-                  if (state is CheckoutSuccess) {
-                    return badges.Badge(
-                      badgeStyle: const badges.BadgeStyle(
-                          elevation: 0, badgeColor: Colors.white),
-                      // elevation: 0,
-                      badgeContent: Text(
-                        '${state.items.length}',
-                        style: pinkTextStyle,
-                      ),
-                      // badgeColor: Colors.white,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const CartPage();
-                              },
-                            ),
-                          );
-                        },
-                        child: const Icon(
-                          Icons.shopping_cart_outlined,
+                BlocBuilder<CheckoutBloc, CheckoutState>(
+                  builder: (context, state) {
+                    if (state is CheckoutSuccess) {
+                      final total = state.items.fold(
+                        0,
+                        (sum, item) => sum + item.attributes!.price!,
+                      );
+                      return Text(
+                        AppFormat.longPrice(total),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
+                      );
+                    }
+                    return const Text(
+                      'Calculate..',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     );
-                  }
-                  return const Text("Loading");
-                },
-              ),
+                  },
+                ),
+                const Spacer(),
+                // Bottom Chekout
+
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: CustomFilledButton(
+                    width: 150,
+                    height: 50,
+                    radius: 8,
+                    title: 'Checkout',
+                    onPressed: () async {
+                      final isLogin = await AuthLocalDatasource().isLogin();
+                      if (isLogin) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const CheckoutPage();
+                            },
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const LoginPage();
+                            },
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              
+              ],
             ),
-            label: '',
-          ),
-        ],
+           
+          ],
+        ),
       ),
     );
   }
